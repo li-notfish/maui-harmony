@@ -95,6 +95,9 @@
     <_MauiTargetPlatformIsWindows Condition="$(_MauiTargetPlatformIdentifier.Contains('windows')) == 'True'">True</_MauiTargetPlatformIsWindows>
     <_MauiTargetPlatformIsTizen>false</_MauiTargetPlatformIsTizen>
     <_MauiTargetPlatformIsTizen Condition="'$(_MauiTargetPlatformIdentifier)' == 'tizen'">True</_MauiTargetPlatformIsTizen>
+    <!-- HarmonyOS -->
+    <_MauiTargetPlatformIsHarmonyOS>false</_MauiTargetPlatformIsHarmonyOS>
+    <_MauiTargetPlatformIsHarmonyOS Condition="'$(_MauiTargetPlatformIdentifier)' == 'harmonyos'">True</_MauiTargetPlatformIsHarmonyOS>
   </PropertyGroup>
 
   <!-- Try determine which .NET workloads are installed -->
@@ -115,6 +118,9 @@
 
     <DotNetMacOSWorkloadIsInstalled Condition="Exists('$(DotNetWorkloadPacksInstallLocation)Microsoft.macOS.Sdk\$(DotNetMacOSWorkloadInstalledVersion)\Sdk\AutoImport.props')">true</DotNetMacOSWorkloadIsInstalled>
     <DotNetTizenWorkloadIsInstalled Condition="Exists('$(DotNetWorkloadPacksInstallLocation)Samsung.Tizen.Sdk\$(DotNetTizenWorkloadInstalledVersion)\Sdk\AutoImport.props')">true</DotNetTizenWorkloadIsInstalled>
+    <!-- HarmonyOS -->
+    <DotNetHarmonyOSWorkloadInstalledVersion Condition="Exists('$(DotNetWorkloadInstallLocation)microsoft.net.sdk.harmonyos\WorkloadManifest.json')">$([System.Text.RegularExpressions.Regex]::Match($([System.IO.File]::ReadAllText('$(DotNetWorkloadInstallLocation)\microsoft.net.sdk.harmonyos\WorkloadManifest.json')), $(DotNetWorkloadVersionRegex)))</DotNetHarmonyOSWorkloadInstalledVersion>
+    <DotNetHarmonyOSWorkloadIsInstalled Condition="Exists('$(DotNetWorkloadPacksInstallLocation)Microsoft.NET.Sdk.HarmonyOS\$(DotNetHarmonyOSWorkloadInstalledVersion)\Sdk\AutoImport.props')">true</DotNetHarmonyOSWorkloadIsInstalled>
 
     <IncludeWindowsTargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) or '$(Packing)' == 'true'">true</IncludeWindowsTargetFrameworks>
     <IncludeMacOSTargetFrameworks Condition="'$(DotNetMacOSWorkloadIsInstalled)' == 'true'">true</IncludeMacOSTargetFrameworks>
@@ -122,6 +128,8 @@
     <IncludeAndroidTargetFrameworks>true</IncludeAndroidTargetFrameworks>
     <IncludeMacCatalystTargetFrameworks>true</IncludeMacCatalystTargetFrameworks>
     <IncludeIosTargetFrameworks>true</IncludeIosTargetFrameworks>
+    <!-- HarmonyOS -->
+    <IncludeHarmonyOSTargetFrameworks Condition="'$(DotNetHarmonyOSWorkloadIsInstalled)' == 'true'">true</IncludeHarmonyOSTargetFrameworks>
     <IncludeCompatibilityProjects>false</IncludeCompatibilityProjects>
     <IncludeCompatibilityProjects Condition="'$(SolutionFileName)' == 'Microsoft.Maui.sln'">true</IncludeCompatibilityProjects>
   </PropertyGroup>
@@ -135,6 +143,8 @@
     <IncludeAndroidTargetFrameworks>true</IncludeAndroidTargetFrameworks>
     <IncludeMacCatalystTargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">true</IncludeMacCatalystTargetFrameworks>
     <IncludeIosTargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">true</IncludeIosTargetFrameworks>
+    <!-- HarmonyOS -->
+    <IncludeHarmonyOSTargetFrameworks Condition="'$(DotNetHarmonyOSWorkloadIsInstalled)' == 'true'">false</IncludeHarmonyOSTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -172,6 +182,8 @@
     <MacCatalystTargetFrameworkVersionSdkDefault>26.0</MacCatalystTargetFrameworkVersionSdkDefault>
     <MacosTargetFrameworkVersionSdkDefault>26.0</MacosTargetFrameworkVersionSdkDefault>
     <AndroidTargetFrameworkVersionSdkDefault>36.0</AndroidTargetFrameworkVersionSdkDefault>
+    <!-- HarmonyOS -->
+    <HarmonyOSTargetFrameworkVersion>26.0</HarmonyOSTargetFrameworkVersion>
     <!-- Current .NET -->
     <IosTargetFrameworkVersion>26.0</IosTargetFrameworkVersion>
     <TvosTargetFrameworkVersion>26.0</TvosTargetFrameworkVersion>
@@ -181,6 +193,8 @@
     <WindowsTargetFrameworkVersion>10.0.19041.0</WindowsTargetFrameworkVersion>
     <Windows2TargetFrameworkVersion>10.0.20348.0</Windows2TargetFrameworkVersion>
     <TizenTargetFrameworkVersion>7.0</TizenTargetFrameworkVersion>
+    <!-- HarmonyOS -->
+    <HarmonyOSTargetFrameworkVersion>26.0</HarmonyOSTargetFrameworkVersion>
     <!-- Previous .NET -->
     <IosPreviousTargetFrameworkVersion>18.0</IosPreviousTargetFrameworkVersion>
     <TvosPreviousTargetFrameworkVersion>18.0</TvosPreviousTargetFrameworkVersion>
@@ -190,6 +204,8 @@
     <WindowsPreviousTargetFrameworkVersion>10.0.19041.0</WindowsPreviousTargetFrameworkVersion>
     <Windows2PreviousTargetFrameworkVersion>10.0.20348.0</Windows2PreviousTargetFrameworkVersion>
     <TizenPreviousTargetFrameworkVersion>7.0</TizenPreviousTargetFrameworkVersion>
+    <!-- HarmonyOS -->
+    <HarmonyOSTargetFrameworkVersion>26.0</HarmonyOSTargetFrameworkVersion>
     <!-- Minimums -->
     <MinimumWindowsTargetFrameworkVersion>10.0.17763.0</MinimumWindowsTargetFrameworkVersion>
   </PropertyGroup>
@@ -207,7 +223,8 @@
     <MauiPlatforms Condition="'$(IncludeMacCatalystTargetFrameworks)' == 'true' and '$(MacCatalystTargetFrameworkVersion)' != '$(MacCatalystTargetFrameworkVersionSdkDefault)'">net$(_MauiDotNetVersion)-maccatalyst;$(MauiPlatforms)</MauiPlatforms>
     <MauiPlatforms Condition="'$(IncludeIosTargetFrameworks)' == 'true'">net$(_MauiDotNetVersion)-ios$(IosTargetFrameworkVersion);$(MauiPlatforms)</MauiPlatforms>
     <MauiPlatforms Condition="'$(IncludeIosTargetFrameworks)' == 'true' and '$(IosTargetFrameworkVersion)' != '$(IosTargetFrameworkVersionSdkDefault)'">net$(_MauiDotNetVersion)-ios;$(MauiPlatforms)</MauiPlatforms>
-
+    <!-- HarmonyOS -->
+    <MauiPlatforms Condition="'$(IncludeHarmonyOSTargetFrameworks)' == 'true'">net$(_MauiDotNetVersion)-harmonyos$(HarmonyOSTargetFrameworkVersion);$(MauiPlatforms)</MauiPlatforms>
     <!-- Library: Previous .NET -->
     <WindowsMauiPreviousPlatforms Condition="'$(WindowsMauiPreviousPlatforms)' == ''">net$(_MauiPreviousDotNetVersion)-windows$(WindowsPreviousTargetFrameworkVersion);net$(_MauiPreviousDotNetVersion)-windows$(Windows2PreviousTargetFrameworkVersion)</WindowsMauiPreviousPlatforms>
     <MauiPreviousPlatforms Condition="'$(IncludeTizenTargetFrameworks)' == 'true'">net$(_MauiPreviousDotNetVersion)-tizen$(TizenPreviousTargetFrameworkVersion);$(MauiPreviousPlatforms)</MauiPreviousPlatforms>

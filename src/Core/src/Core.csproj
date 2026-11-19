@@ -76,6 +76,10 @@
     <PackageReference Include="Tizen.UIExtensions.NUI" />
     <ProjectReference Include="..\..\Graphics\src\Graphics.Skia\Graphics.Skia.csproj" />
   </ItemGroup>
+  <!-- HarmonyOS -->
+  <ItemGroup Condition="$(TargetFramework.Contains('-harmonyos'))">
+    <PackageReference Include="HarmonyOS.Bindings" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Essentials\src\Essentials.csproj" />
     <ProjectReference Include="..\..\Graphics\src\Graphics\Graphics.csproj" />

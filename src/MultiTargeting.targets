@@ -65,6 +65,13 @@
     <Compile Remove="**\Tizen\**\*.cs" />
     <None Include="**\Tizen\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
   </ItemGroup>
+  <!-- HarmonyOS（非 HarmonyOS TFM 时移除平台文件） -->
+  <ItemGroup Condition=" '$(_MauiTargetPlatformIsHarmonyOS)' != 'True' ">
+    <Compile Remove="**\**\*.HarmonyOS.cs" />
+    <None Include="**\**\*.HarmonyOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+    <Compile Remove="**\HarmonyOS\**\*.cs" />
+    <None Include="**\HarmonyOS\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Remove="bin\**;obj\**" />
     <None Remove="bin\**;obj\**" />
@@ -112,5 +119,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
     <DefineConstants>WINDOWS_UWP;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <!-- HarmonyOS -->
+  <PropertyGroup Condition=" '$(_MauiTargetPlatformIsHarmonyOS)' == 'True' ">
+    <DefineConstants>$(DefineConstants);HARMONYOS</DefineConstants>
   </PropertyGroup>
 </Project>
