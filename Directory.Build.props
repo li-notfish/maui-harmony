@@ -182,8 +182,6 @@
     <MacCatalystTargetFrameworkVersionSdkDefault>26.0</MacCatalystTargetFrameworkVersionSdkDefault>
     <MacosTargetFrameworkVersionSdkDefault>26.0</MacosTargetFrameworkVersionSdkDefault>
     <AndroidTargetFrameworkVersionSdkDefault>36.0</AndroidTargetFrameworkVersionSdkDefault>
-    <!-- HarmonyOS -->
-    <HarmonyOSTargetFrameworkVersion>26.0</HarmonyOSTargetFrameworkVersion>
     <!-- Current .NET -->
     <IosTargetFrameworkVersion>26.0</IosTargetFrameworkVersion>
     <TvosTargetFrameworkVersion>26.0</TvosTargetFrameworkVersion>
@@ -204,8 +202,6 @@
     <WindowsPreviousTargetFrameworkVersion>10.0.19041.0</WindowsPreviousTargetFrameworkVersion>
     <Windows2PreviousTargetFrameworkVersion>10.0.20348.0</Windows2PreviousTargetFrameworkVersion>
     <TizenPreviousTargetFrameworkVersion>7.0</TizenPreviousTargetFrameworkVersion>
-    <!-- HarmonyOS -->
-    <HarmonyOSTargetFrameworkVersion>26.0</HarmonyOSTargetFrameworkVersion>
     <!-- Minimums -->
     <MinimumWindowsTargetFrameworkVersion>10.0.17763.0</MinimumWindowsTargetFrameworkVersion>
   </PropertyGroup>

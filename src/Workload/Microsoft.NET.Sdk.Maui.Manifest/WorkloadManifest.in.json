@@ -13,7 +13,8 @@
             "extends": [
                 "maui-android",
                 "maui-ios",
-                "maui-tizen"
+                "maui-tizen",
+                "maui-harmonyos"
             ]
         },
         "maui-desktop": {
